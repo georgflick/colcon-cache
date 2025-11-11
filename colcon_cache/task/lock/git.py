@@ -14,6 +14,7 @@ from colcon_core.logging import colcon_logger
 from colcon_core.plugin_system import satisfies_version
 from colcon_core.task import TaskExtensionPoint
 from git import Repo
+import os
 
 logger = colcon_logger.getChild(__name__)
 
