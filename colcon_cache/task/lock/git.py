@@ -118,13 +118,15 @@ class GitLockTask(TaskExtensionPoint):
         lockfile.checksums.reference = h.hexdigest()
 
         diff = reference_commit.diff(None, paths=[args.path])
+        print(diff)
         if diff:
             for change_type in sorted(args.git_diff_filter):
                 for change in diff.iter_change_type(change_type):
                     h.update(change.change_type.encode('utf-8'))
                     h.update(change.a_path.encode('utf-8'))
                     h.update(change.b_path.encode('utf-8'))
-                    if not change.deleted_file:
+                    print(change)
+                    if not change.deleted_file and os.path.isfile(change.b_path):
                         hash_object = repo.git.hash_object(change.b_path)
                         h.update(bytes.fromhex(hash_object))
         lockfile.checksums.current = h.hexdigest()
